@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import LoginPage from "@/pages/LoginPage.vue";
+import Top from "@/pages/Top.vue";
 </script>
 
 <template>
-  <LoginPage />
+  <Top />
 </template>
