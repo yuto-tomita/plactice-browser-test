@@ -88,7 +88,6 @@ const closeModal = () => {
       <span :class="$style.modal_close" @click="closeModal" />
 
       <div :class="$style.slot_content" ref="modalElement">
-        <p>hoge</p>
         <slot />
       </div>
     </div>
