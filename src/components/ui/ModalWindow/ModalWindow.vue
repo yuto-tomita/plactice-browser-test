@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
+import { nextTick, ref, watch } from "vue";
 const modalState = defineModel<boolean>({ required: true });
 const focusState = ref(false);
 const focusableElements = ref<FocusableElement[]>([]);
@@ -62,16 +62,27 @@ const trapFocus = () => {
     correctFocusableElement(childElement as HTMLElement);
   }
 
-  focusFirstFocusableElement();
+  if (focusableElements.value.length) {
+    focusFirstFocusableElement();
+  }
   focusState.value = true;
 };
 
-onMounted(() => {
-  trapFocus();
-});
-onUnmounted(() => {
-  focusState.value = false;
-});
+watch(
+  modalState,
+  (value) => {
+    if (!value) {
+      focusState.value = false;
+      focusableElements.value = [];
+      return;
+    }
+    nextTick(() => {
+      console.log(focusableElements.value);
+      trapFocus();
+    });
+  },
+  { immediate: true },
+);
 
 const closeModal = () => {
   modalState.value = false;
@@ -79,13 +90,14 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div :class="$style.modal_background">
-    <div
-      :class="$style.modal_content"
-      role="dialog"
-      aria-modal
-    >
-      <span :class="$style.modal_close" @click="closeModal" />
+  <div
+    v-if="modalState"
+    role="dialog"
+    aria-modal="true"
+    :class="$style.modal_background"
+  >
+    <div :class="$style.modal_content">
+      <span :class="$style.modal_close" @click="closeModal" data-testid="close-button" />
 
       <div :class="$style.slot_content" ref="modalElement">
         <slot />
