@@ -2,28 +2,34 @@
 import ModalWindow from "@/components/ui/ModalWindow";
 import { ref } from "vue";
 
-const modalState = ref(true);
+const modalState = ref(false);
 </script>
 
 <template>
   <button @click="modalState = true">clickMe</button>
 
   <ModalWindow
-    v-if="modalState"
-    teleport='body'
     v-model="modalState"
+    teleport='body'
   >
     <label for="form1">これは disable なフォーム</label>
     <div>
       <p>
-        <input id="form1" type="text" disabled />
+        <input id="form1" type="text" />
       </p>
     </div>
 
-    <label for="form2">好きな食べ物は？</label>
+    <label for="form2">これは disable なフォーム</label>
     <div>
       <p>
-        <input id="form2" type="text" />
+        <input id="form2" type="text" disabled />
+      </p>
+    </div>
+
+    <label for="form3">好きな食べ物は？</label>
+    <div>
+      <p>
+        <input id="form3" type="text" />
       </p>
     </div>
   </ModalWindow>
