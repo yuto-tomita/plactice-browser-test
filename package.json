@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "storybook-test",
+    "test-storybook": "test-storybook",
     "lint": "biome check --write"
   },
   "dependencies": {
