@@ -11,16 +11,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "biome check --write",
-    "test:browser": "vitest --workspace=vitest.workspace.ts",
-    "build:slidev": "slidev build",
-    "dev:slidev": "slidev --open",
-    "export:slidev": "slidev export"
+    "test:browser": "vitest --workspace=vitest.workspace.ts"
   },
   "dependencies": {
-    "vue": "^3.4.29",
-    "@slidev/cli": "^51.4.0",
-    "@slidev/theme-default": "latest",
-    "@slidev/theme-seriph": "latest"
+    "vue": "^3.4.29"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
