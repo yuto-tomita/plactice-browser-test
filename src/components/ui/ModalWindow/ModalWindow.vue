@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { nextTick, ref, watch } from "vue";
+
+defineEmits<{
+  "update:modelValue": [value: boolean];
+}>();
+
 const modalState = defineModel<boolean>({ required: true });
 const focusState = ref(false);
 const focusableElements = ref<FocusableElement[]>([]);
@@ -39,10 +44,6 @@ const isFocusableElement = (element: HTMLElement) => {
   return element.nodeName in FOCUSABLE_ELEMENTS;
 };
 
-const focusFirstFocusableElement = () => {
-  focusableElements.value[0].focus();
-};
-
 const correctFocusableElement = (element: HTMLElement) => {
   if (element.hasChildNodes()) {
     for (const childElement of element.children) {
@@ -62,10 +63,33 @@ const trapFocus = () => {
     correctFocusableElement(childElement as HTMLElement);
   }
 
+  const firstFocusableElement = focusableElements.value[0];
   if (focusableElements.value.length) {
-    focusFirstFocusableElement();
+    firstFocusableElement.focus();
   }
+
+  modalElement.value?.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.code !== "Tab") return;
+
+    const currentFocusElement = document.activeElement as HTMLElement;
+    const lastFocusableElement = focusableElements.value[focusableElements.value.length - 1];
+
+    if (e.shiftKey && currentFocusElement === firstFocusableElement) {
+      e.preventDefault();
+      lastFocusableElement.focus();
+    }
+
+    if (!e.shiftKey && currentFocusElement === lastFocusableElement) {
+      e.preventDefault();
+      firstFocusableElement.focus();
+    }
+  });
+
   focusState.value = true;
+};
+
+const closeModal = () => {
+  modalState.value = false;
 };
 
 watch(
@@ -77,16 +101,17 @@ watch(
       return;
     }
     nextTick(() => {
-      console.log(focusableElements.value);
       trapFocus();
+
+      modalElement.value?.addEventListener("keydown", (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          closeModal();
+        }
+      });
     });
   },
   { immediate: true },
 );
-
-const closeModal = () => {
-  modalState.value = false;
-};
 </script>
 
 <template>
@@ -97,9 +122,10 @@ const closeModal = () => {
     :class="$style.modal_background"
   >
     <div :class="$style.modal_content">
-      <span :class="$style.modal_close" @click="closeModal" data-testid="close-button" />
-
+      
       <div :class="$style.slot_content" ref="modalElement">
+        <button type="button" :class="$style.modal_close" @click="closeModal" data-testid="close-button" />
+
         <slot />
       </div>
     </div>
