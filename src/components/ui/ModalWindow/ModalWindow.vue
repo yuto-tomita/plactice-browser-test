@@ -88,6 +88,12 @@ const trapFocus = () => {
   focusState.value = true;
 };
 
+const handleEnterKey = (e: KeyboardEvent) => {
+  if (e.key === "Enter") {
+    closeModal();
+  }
+};
+
 const closeModal = () => {
   modalState.value = false;
 };
@@ -103,7 +109,7 @@ watch(
     nextTick(() => {
       trapFocus();
 
-      modalElement.value?.addEventListener("keydown", (e: KeyboardEvent) => {
+      document.addEventListener("keydown", (e: KeyboardEvent) => {
         if (e.key === "Escape") {
           closeModal();
         }
@@ -119,12 +125,13 @@ watch(
     v-if="modalState"
     role="dialog"
     aria-modal="true"
+    data-testid="modal-window"
     :class="$style.modal_background"
   >
     <div :class="$style.modal_content">
       
       <div :class="$style.slot_content" ref="modalElement">
-        <button type="button" :class="$style.modal_close" @click="closeModal" data-testid="close-button" />
+        <button type="button" :class="$style.modal_close" @click="closeModal" @keydown="handleEnterKey" data-testid="close-button" />
 
         <slot />
       </div>
