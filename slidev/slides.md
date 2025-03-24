@@ -72,6 +72,14 @@ Storybook上でコンポーネントの振る舞いが正しいかどうかを�
 
 ---
 
+# テストコード
+
+実際にデプロイ先でテストを実行することもできたりする
+
+https://yuto-tomita.github.io/plactice-browser-test/?path=/story/components-ui-modalwindow--basic
+
+---
+
 # まとめ
 
 かなりテストの信頼性が上がり、成果の視認性が上がる良い手法になると思った。
