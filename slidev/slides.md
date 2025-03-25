@@ -1,9 +1,6 @@
 ---
 # You can also start simply with 'default'
 theme: seriph
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
 # some information about your slides (markdown enabled)
 title: Storybook の InteractionTest がよさそうっていう話
 info: |
@@ -13,13 +10,24 @@ info: |
   Learn more at [Sli.dev](https://sli.dev)
 # apply unocss classes to the current slide
 class: text-center
-# https://sli.dev/features/drawing
-drawings:
-  persist: false
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
 transition: slide-left
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
+---
+
+# Storybook の InteractionTest がよさそうっていう話
+
+---
+
+# 自己紹介
+
+名前: 冨田 優斗
+
+趣味: 筋トレ
+
+ハマってること: ディズニー映画鑑賞、パペットスンスン、ちいかわ
+
 ---
 
 # InteractionTest とは？
@@ -72,11 +80,21 @@ Storybook上でコンポーネントの振る舞いが正しいかどうかを�
 
 ---
 
-# テストコード
+# テストデモ
 
 実際にデプロイ先でテストを実行することもできたりする
 
 https://yuto-tomita.github.io/plactice-browser-test/?path=/story/components-ui-modalwindow--basic
+
+---
+
+# interaction test のイケてると思ったところ
+
+- 実際にブラウザにレンダリングしてテストを行うため、擬似的なDOMをJSで生成してターミナル上で操作するよりも信頼性が高く目視でデバッグできる
+
+- 上手くハマれば自然と Storybook が整備されていく環境を作ることができそう
+
+- ターミナル上からテストを走らせる場合は Playwright によってテスト実行されるため、同時に複数のブラウザから検証することが可能(どちらかというと Playwright すごい)
 
 ---
 
